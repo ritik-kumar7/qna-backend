@@ -1,7 +1,9 @@
 import BlogLink from "../models/BlogLinkModel.js";
+import connectDB from "../config/db.js";
 
 const createLink = async (req, res) => {
     try {
+        await connectDB();
         const { heading, description, link } = req.body;
         if (!heading || !description || !link) {
             return res.status(400).json({ message: "All fields are required" });
@@ -17,6 +19,7 @@ const createLink = async (req, res) => {
 
 const getLink = async (req, res) => {
     try {
+        await connectDB();
         const blogLinks = await BlogLink.find();
         return res.status(200).json({ blogLinks });
     } catch (error) {
