@@ -16,7 +16,11 @@ app.use('/api/qna', qnaLinkRoute);
 
 const port = process.env.PORT || 4000;
 
-app.listen(port, () => {
-    connectDB();
-    console.log("server running on ", port);
+app.listen(port, async () => {
+    try {
+        await connectDB();
+        console.log("server running on ", port);
+    } catch (err) {
+        console.error("Failed to start server:", err);
+    }
 })
