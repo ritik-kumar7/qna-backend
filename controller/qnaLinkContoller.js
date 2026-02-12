@@ -25,13 +25,14 @@ const sendLink = async (req, res) => {
 
         const link = await QnaLink.find();
         if (!link || link.length === 0) {
-            return res.status(404).json({ message: "no link found" });
+            return res.status(200).json({ message: "no link found", success: true, link: [] });
         }
         return res.status(200).json({ message: "link sent", success: true, link });
 
     }
     catch (error) {
-        return res.status(500).json({ message: "internal server error", error })
+        console.error("Error in sendLink:", error);
+        return res.status(500).json({ message: "internal server error", error: error.message })
 
     }
 }
