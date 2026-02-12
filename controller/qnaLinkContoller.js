@@ -1,7 +1,9 @@
 import QnaLink from "../models/QnaLinkModel.js";
+import connectDB from "../config/db.js";
 
 const createLink = async (req, res) => {
     try {
+        await connectDB();
         const { topic, link } = req.body;
 
         if (!topic || !link) {
@@ -22,7 +24,7 @@ const createLink = async (req, res) => {
 
 const sendLink = async (req, res) => {
     try {
-
+        await connectDB();
         const link = await QnaLink.find();
         if (!link || link.length === 0) {
             return res.status(200).json({ message: "no link found", success: true, link: [] });

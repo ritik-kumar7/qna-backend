@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
+    if (mongoose.connection.readyState >= 1) {
+        return;
+    }
+
     try {
         await mongoose.connect(process.env.MONGO_URL, {
-            serverSelectionTimeoutMS: 5000 // Timeout faster if no connection available
+            serverSelectionTimeoutMS: 5000,
         });
         console.log("database connected");
     } catch (error) {
-
-        console.log("error while connecting Database ", error.message);
-
+        console.error("error while connecting Database ", error.message);
+        throw error;
     }
 }
 
